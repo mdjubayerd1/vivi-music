@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class LikeBody(
     val context: Context,
     val target: Target,
+    val status: String? = null,
 ) {
     @Serializable
     sealed class Target {

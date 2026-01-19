@@ -1098,6 +1098,36 @@ object YouTube {
         return innerTube.getMediaInfo(videoId)
     }
 
+    /**
+     * Likes a video (song) on YouTube Music.
+     *
+     * @param videoId The ID of the video to like.
+     * @return Result<Unit> indicating success or failure.
+     */
+    suspend fun like(videoId: String): Result<Unit> = runCatching {
+        innerTube.likeVideo(WEB_REMIX, videoId)
+    }
+
+    /**
+     * Removes a like from a video on YouTube Music.
+     *
+     * @param videoId The ID of the video to unlike.
+     * @return Result<Unit> indicating success or failure.
+     */
+    suspend fun unlike(videoId: String): Result<Unit> = runCatching {
+        innerTube.unlikeVideo(WEB_REMIX, videoId)
+    }
+
+    /**
+     * Dislikes a video (song) on YouTube Music.
+     *
+     * @param videoId The ID of the video to dislike.
+     * @return Result<Unit> indicating success or failure.
+     */
+    suspend fun dislike(videoId: String): Result<Unit> = runCatching {
+        innerTube.dislikeVideo(WEB_REMIX, videoId)
+    }
+
     @JvmInline
     value class SearchFilter(val value: String) {
         companion object {

@@ -79,6 +79,10 @@ fun NavGraphBuilder.navigationBuilder(
     composable("new_release") {
         NewReleaseScreen(navController, scrollBehavior)
     }
+    // Route for the new Swipe Mode feature (Tinder-like music discovery)
+    composable("swipe_mode") {
+        SwipeScreen(navController)
+    }
     composable("charts_screen") {
        ChartsScreen(navController)
     }

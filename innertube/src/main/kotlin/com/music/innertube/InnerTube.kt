@@ -326,6 +326,27 @@ class InnerTube {
         )
     }
 
+    /**
+     * Sends a dislike request for a video.
+     * Uses the 'like/like' endpoint but specifies the status as 'DISLIKE'.
+     *
+     * @param client The YouTube client context.
+     * @param videoId The ID of the video to dislike.
+     */
+    suspend fun dislikeVideo(
+        client: YouTubeClient,
+        videoId: String,
+    ) = httpClient.post("like/like") {
+        ytClient(client, setLogin = true)
+        setBody(
+            LikeBody(
+                context = client.toContext(locale, visitorData, dataSyncId),
+                target = LikeBody.Target.VideoTarget(videoId),
+                status = "DISLIKE"
+            )
+        )
+    }
+
     suspend fun subscribeChannel(
         client: YouTubeClient,
         channelId: String,
