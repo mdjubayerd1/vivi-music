@@ -1,6 +1,5 @@
 package com.music.vivi.ui.screens.settings
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -76,6 +72,10 @@ import com.music.vivi.utils.rememberPreference
 import com.music.vivi.viewmodels.AccountSettingsViewModel
 import com.music.vivi.viewmodels.HomeViewModel
 
+/**
+ * Screen for managing user account settings, including login/logout.
+ * Also handles sync settings and advanced token management.
+ */
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AccountSettings(
@@ -225,7 +225,9 @@ fun AccountSettings(
                                         )
                                     } else {
                                         Icon(
-                                            painter = painterResource(if (isLoggedIn) R.drawable.person else R.drawable.login),
+                                            painter = painterResource(
+                                                if (isLoggedIn) R.drawable.person else R.drawable.login
+                                            ),
                                             contentDescription = null,
                                             modifier = Modifier.size(22.dp)
                                         )
@@ -250,9 +252,14 @@ fun AccountSettings(
                                                 .padding(end = 8.dp)
                                                 .clickable(
                                                     indication = null,
-                                                    interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                                                    interactionSource = remember {
+                                                        androidx.compose.foundation.interaction.MutableInteractionSource()
+                                                    }
                                                 ) {
-                                                    accountSettingsViewModel.logoutAndClearSyncedContent(context, onInnerTubeCookieChange)
+                                                    accountSettingsViewModel.logoutAndClearSyncedContent(
+                                                        context,
+                                                        onInnerTubeCookieChange
+                                                    )
                                                 }
                                         ) {
                                             Text(
@@ -301,7 +308,13 @@ fun AccountSettings(
                                     ) {
                                         Box(modifier = Modifier.weight(1f)) {
                                             ModernInfoItem(
-                                                icon = { Icon(painterResource(R.drawable.add_circle), null, modifier = Modifier.size(22.dp)) },
+                                                icon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.add_circle),
+                                                        null,
+                                                        modifier = Modifier.size(22.dp)
+                                                    )
+                                                },
                                                 title = stringResource(R.string.more_content),
                                                 subtitle = stringResource(R.string.ytm_sync),
                                                 iconBackgroundColor = iconBgColor,
@@ -325,7 +338,13 @@ fun AccountSettings(
                                     ) {
                                         Box(modifier = Modifier.weight(1f)) {
                                             ModernInfoItem(
-                                                icon = { Icon(painterResource(R.drawable.cached), null, modifier = Modifier.size(22.dp)) },
+                                                icon = {
+                                                    Icon(
+                                                        painterResource(R.drawable.cached),
+                                                        null,
+                                                        modifier = Modifier.size(22.dp)
+                                                    )
+                                                },
                                                 title = stringResource(R.string.yt_sync),
                                                 subtitle = stringResource(R.string.ytm_sync),
                                                 iconBackgroundColor = iconBgColor,
@@ -364,7 +383,9 @@ fun AccountSettings(
                             .padding(horizontal = 16.dp),
                         items = listOf {
                             ModernInfoItem(
-                                icon = { Icon(painterResource(R.drawable.token), null, modifier = Modifier.size(22.dp)) },
+                                icon = {
+                                    Icon(painterResource(R.drawable.token), null, modifier = Modifier.size(22.dp))
+                                },
                                 title = when {
                                     !isLoggedIn -> stringResource(R.string.login_using_token)
                                     showToken -> stringResource(R.string.token_shown)
@@ -372,9 +393,13 @@ fun AccountSettings(
                                 },
                                 subtitle = stringResource(R.string.token_adv_login_description),
                                 onClick = {
-                                    if (!isLoggedIn) showTokenEditor = true
-                                    else if (!showToken) showToken = true
-                                    else showTokenEditor = true
+                                    if (!isLoggedIn) {
+                                        showTokenEditor = true
+                                    } else if (!showToken) {
+                                        showToken = true
+                                    } else {
+                                        showTokenEditor = true
+                                    }
                                 },
                                 showArrow = true,
                                 iconBackgroundColor = iconBgColor,
@@ -404,7 +429,9 @@ fun AccountSettings(
                             .padding(horizontal = 16.dp),
                         items = listOf {
                             ModernInfoItem(
-                                icon = { Icon(painterResource(R.drawable.integration), null, modifier = Modifier.size(22.dp)) },
+                                icon = {
+                                    Icon(painterResource(R.drawable.integration), null, modifier = Modifier.size(22.dp))
+                                },
                                 title = stringResource(R.string.integrations),
                                 subtitle = stringResource(R.string.integrations_subtitle),
                                 onClick = {
@@ -439,12 +466,16 @@ fun AccountSettings(
                     onDone = { data ->
                         data.split("\n").forEach {
                             when {
-                                it.startsWith("***INNERTUBE COOKIE*** =") -> onInnerTubeCookieChange(it.substringAfter("="))
+                                it.startsWith(
+                                    "***INNERTUBE COOKIE*** ="
+                                ) -> onInnerTubeCookieChange(it.substringAfter("="))
                                 it.startsWith("***VISITOR DATA*** =") -> onVisitorDataChange(it.substringAfter("="))
                                 it.startsWith("***DATASYNC ID*** =") -> onDataSyncIdChange(it.substringAfter("="))
                                 it.startsWith("***ACCOUNT NAME*** =") -> onAccountNameChange(it.substringAfter("="))
                                 it.startsWith("***ACCOUNT EMAIL*** =") -> onAccountEmailChange(it.substringAfter("="))
-                                it.startsWith("***ACCOUNT CHANNEL HANDLE*** =") -> onAccountChannelHandleChange(it.substringAfter("="))
+                                it.startsWith(
+                                    "***ACCOUNT CHANNEL HANDLE*** ="
+                                ) -> onAccountChannelHandleChange(it.substringAfter("="))
                             }
                         }
                     },
