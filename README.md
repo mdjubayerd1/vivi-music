@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/vivizzz007/vivi-music/blob/main/fastlane/metadata/android/en-US/images/icon.png?raw=true" width="180" height="180" style="display: block; margin: 0 auto; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.3));"/>
   <h1 style="font-size: 3rem; margin-top: 1rem;">VIVI Music</h1>
-  <h3 style="font-weight: 400; color: #888;">The Ultimate Material You Audio Experience</h3>
+  <h3 style="font-weight: 400; color: #888;">The Ultimate Material You Audio Experience (YTM)</h3>
 
   <p align="center">
     <a href="https://github.com/vivizzz007/vivi-music/releases">
